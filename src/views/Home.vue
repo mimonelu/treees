@@ -97,7 +97,7 @@ Contents: class=red
         .then((dataUrl) => {
           this.download('test.png', dataUrl)
         })
-        .catch(console.error)
+        // .catch(console.error)
     },
 
     download (fileName, href) {
