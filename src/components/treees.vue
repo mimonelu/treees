@@ -40,6 +40,10 @@ export default {
 @import "@/assets/_variables";
 
 .Treees {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: scroll;
+
   .all {
     --margin-horizontal: 0.5rem;
     --margin-vertical: 1rem;
@@ -47,6 +51,7 @@ export default {
     --border-width: 2px;
     --image-width: 120px;
     background-color: #ffffff;
+    color: #000000;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -137,7 +142,7 @@ export default {
   .disabled > .box > .header,
   .disabled > .box > .image,
   .disabled > .box > .footer {
-    opacity: 0.375;
+    opacity: 0.5;
   }
   .borderless > .box {
     border-color: transparent;
@@ -164,6 +169,7 @@ export default {
     font-weight: bold;
     line-height: 1.25;
     margin: 0 1rem;
+    white-space: nowrap;
   }
   .has-image > .box > .header {
     margin: 0;
@@ -173,6 +179,7 @@ export default {
     cursor: pointer;
     margin-top: 0.25rem;
     width: var(--image-width);
+    vertical-align: middle;
   }
 
   .footer {

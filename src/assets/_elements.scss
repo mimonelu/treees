@@ -3,7 +3,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  image-rendering: pixelated;
   line-height: 1;
   margin: 0;
   outline-style: none;
@@ -25,4 +24,19 @@ body {
   height: 100%;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+}
+
+button {
+  appearance: none;
+  background-color: #ffffff;
+  border-style: none;
+  color: #000000;
+  cursor: pointer;
+  font-size: medium;
+  font-weight: bold;
+  padding: 0.25rem 1rem;
+  user-select: none;
+  &:hover {
+    color: $accent-color;
+  }
 }

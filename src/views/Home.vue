@@ -1,16 +1,28 @@
 <template>
-  <div class="Home">
-    <div class="left">
-      <TextArea :value.sync="source" />
+  <div
+    class="Home"
+    :data-mode="mode"
+  >
+    <div class="header">
+      <h1>Treees</h1>
+      <menu>
+        <button @click="onClickToggleModeButton"><span>{{ mode }}</span> mode</button>
+        <button @click="onClickCaptureButton">Capture</button>
+      </menu>
     </div>
-    <div class="right">
-      <div class="treees-controle">
-        <button @click="onCapture">Capture</button>
+    <div class="content">
+      <div
+        v-if="mode === 'edit'"
+        class="left"
+      >
+        <TextArea :value.sync="source" />
       </div>
-      <Treees
-        ref="treees"
-        :source="source"
-      />
+      <div class="right">
+        <Treees
+          ref="treees"
+          :source="source"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -31,30 +43,55 @@ export default {
 
   data () {
     return {
-      source: `#pageTitle=Sample Tree
+      mode: 'edit',
+      source: `#pageTitle=My Sitemap
+#imagePath=img/
 
-Top: class=red
-  Login: class=red
-    Authorized area: class=borderless
-      Contents
-  Password reset: class=red
-  Error: class=red
-
-Contents
+Top
   About
-  Categories
-    Fashion
-      Fashion
-    Foods
-  Contact
-  Links
-    Other site: class=fill
+  Pricing
+    Free
+    Paid
+  Contact: footer=Search bar<br>Top questions
+    Email: class=fill
+  Terms
+    ...
+  Privacy
+    ...
+  Login
+    Authorized: class=borderless,red
+      Contents: class=red
+    Password reset
+      Email: class=fill
+  Error
+
+Contents: class=red
+  Categories: class=red
+    All: class=red
+      ...: class=red
+    Novel: class=red; image=novel.jpg
+      ...: class=red
+    Music: class=red; image=music.jpg
+      ...: class=red
+    Movie: class=disabled,red; footer=Coming soon
+    Game: class=red; image=game.jpg
+      ...: class=red
+  Search: class=red
+  Cart: class=red
+    Shipping form: class=red
+      Payment form: class=red
+        Confirmation: class=red
+          Email: class=fill
 `,
     }
   },
 
   methods: {
-    onCapture () {
+    onClickToggleModeButton () {
+      this.mode = this.mode === 'edit' ? 'view' : 'edit'
+    },
+
+    onClickCaptureButton () {
       const $node = this.$refs.treees.$el.querySelector('.all')
       htmlToImage.toPng($node)
         .then((dataUrl) => {
@@ -79,7 +116,42 @@ Contents
 
 .Home {
   display: flex;
+  flex-direction: column;
   height: 100%;
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1rem 0 2rem;
+    user-select: none;
+
+    h1 {
+      color: #808080;
+      font-size: x-large;
+      margin: 0;
+    }
+
+    menu {
+      margin-left: auto;
+
+      button {
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+
+        span {
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    padding: 1rem;
+  }
 
   .left {
     width: 50%;
@@ -91,14 +163,13 @@ Contents
     width: 50%;
     flex-direction: column;
   }
-
-  .treees-controle {
-    margin-bottom: 0.5rem;
+  &[data-mode="view"] .right {
+    width: 100%;
   }
 
   .Treees {
     flex-grow: 1;
-    overflow: scroll;
+    @include scroll-bar(#ffffff, #c0c0c0);
   }
 }
 </style>

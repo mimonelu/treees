@@ -8,7 +8,6 @@
 @import "@/assets/_variables";
 
 #app {
-  padding: 1rem;
   height: 100%;
 }
 </style>

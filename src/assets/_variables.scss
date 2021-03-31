@@ -1,3 +1,18 @@
-$bg-color: #f0f0f0;
-$fg-color: #000000;
+$bg-color: #303030;
+$fg-color: #f0f0f0;
 $accent-color: #0080f0;
+
+@mixin scroll-bar ($bg-color, $fg-color) {
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: $bg-color;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $fg-color;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $bg-color;
+  }
+}
