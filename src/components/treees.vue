@@ -40,15 +40,13 @@ export default {
 @import "@/assets/_variables";
 
 .Treees {
-  display: block;
-  height: 100%;
-
   .all {
     --margin-horizontal: 0.5rem;
     --margin-vertical: 1rem;
     --border-color: #000000;
     --border-width: 2px;
     --image-width: 120px;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     flex-grow: 1;

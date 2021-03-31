@@ -1,14 +1,23 @@
 <template>
   <div class="Home">
-    <TextArea
-      :value.sync="source"
-      @change="onChange"
-    />
-    <Treees :source="source" />
+    <div class="left">
+      <TextArea :value.sync="source" />
+    </div>
+    <div class="right">
+      <div class="treees-controle">
+        <button @click="onCapture">Capture</button>
+      </div>
+      <Treees
+        ref="treees"
+        :source="source"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+// SEE: https://www.npmjs.com/package/html-to-image
+import * as htmlToImage from 'html-to-image'
 import TextArea from '@/components/text-area'
 import Treees from '@/components/treees'
 
@@ -35,6 +44,7 @@ Contents
   About
   Categories
     Fashion
+      Fashion
     Foods
   Contact
   Links
@@ -44,8 +54,21 @@ Contents
   },
 
   methods: {
-    onChange () {
-      // console.log(this.source)
+    onCapture () {
+      const $node = this.$refs.treees.$el.querySelector('.all')
+      htmlToImage.toPng($node)
+        .then((dataUrl) => {
+          this.download('test.png', dataUrl)
+        })
+        .catch(console.error)
+    },
+
+    download (fileName, href) {
+      const link = document.createElement('a')
+      link.download = fileName
+      link.href = href
+      link.target = '_blank'
+      link.click()
     },
   },
 }
@@ -55,13 +78,26 @@ Contents
 @import "@/assets/_variables";
 
 .Home {
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   height: 100%;
 
+  .left {
+    width: 50%;
+    margin-right: 1rem;
+  }
+
+  .right {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+  }
+
+  .treees-controle {
+    margin-bottom: 0.5rem;
+  }
+
   .Treees {
-    background-color: #ffffff;
+    flex-grow: 1;
     overflow: scroll;
   }
 }
