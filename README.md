@@ -1,5 +1,11 @@
 # treees
 
+## Tasks
+* CodeMirror の導入＋ textarea-caret の撤去
+* エラーの対処
+* スタイライズまわりの実装
+* LocalStorage への保存・読込
+
 ## Project setup
 ```
 npm install
