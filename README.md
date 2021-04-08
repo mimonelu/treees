@@ -1,8 +1,7 @@
 # treees
 
 ## Tasks
-* CodeMirror の導入＋ textarea-caret の撤去
-* エラーの対処
+* CodeMirror の導入＋ textarea-caret の削除
 * スタイライズまわりの実装
 * LocalStorage への保存・読込
 

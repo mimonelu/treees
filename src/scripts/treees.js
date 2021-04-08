@@ -4,43 +4,70 @@ export default (schemeText, $container) => {
   render(pageSchemes, nodeSchemes, $container)
 }
 
+// スキームの作成
 const makeSchemes = (text) => {
+  // ページスキーム（ディレクティブの格納場所）
   const pageSchemes = { pageTitle: '', imagePath: '' }
-  const nodeSchemes = { level: 0, children: [] }
+
+  // ノードスキーム
+  const nodeSchemes = { indent: 0, children: [] }
+
   const parentNodes = [ nodeSchemes ]
   let currentNode = nodeSchemes
   let previousNode = null
   text.trim().split('\n').forEach((line) => {
-    const directive = (line.match(/^#(.*)/) || [ '', '' ])[1]
+    // コメントを除去
+    let text = line.replace(/\/\/.*$/, '')
+    if (text === '') {
+      return
+    }
+
+    // インデント
+    const indent = (text.match(/^(?: |\t)*/)[0].match(/ {2}|\t/g) || []).length
+    text = text.trim()
+
+    // ディレクティブ
+    const directive = (text.match(/^#(.*)/) || [ '', '' ])[1]
     if (directive !== '') {
+      // ページタイトル
       const pageTitle = (directive.match(/pageTitle=([^;]*)/) || [ '', '' ])[1]
       if (pageTitle !== '') {
         pageSchemes.pageTitle = pageTitle
       }
+
+      // イメージパス
       const imagePath = (directive.match(/imagePath=([^;]*)/) || [ '', '' ])[1]
       if (imagePath !== '') {
         pageSchemes.imagePath = imagePath
       }
       return
     }
-    const level = line.match(/^ */)[0].length / 2
-    const text = line.replace(/\/\/.*$/, '').trim()
-    if (text === '') {
-      return
-    }
+
+    // 名称
     const name = (text.match(/([^:]+)/) || [ '', '' ])[1]
+
+    // ヘッダー ※未使用。実質名称に同じ
     const header = (text.match(/header=([^;]*)/) || [ '', '' ])[1] || name
+
+    // フッター
     const footer = (text.match(/footer=([^;]*)/) || [ '', '' ])[1]
+
+    // イメージ
     const image = (text.match(/image=([^;]*)/) || [ '', '' ])[1]
+
+    // クラス配列
     const classes = (text.match(/class=([^;]*)/) || [ '', '' ])[1].split(',')
-    const node = { level, children: [], name, header, footer, image, classes }
+
+    // 現在のノード
+    const node = { indent, children: [], name, header, footer, image, classes }
+
     if (previousNode) {
-      if (level > previousNode.level) {
+      if (indent > previousNode.indent) {
         parentNodes.push(previousNode)
         currentNode = previousNode
-      } else if (level < previousNode.level) {
-        parentNodes.splice(level + 1)
-        currentNode = parentNodes[level]
+      } else if (indent < previousNode.indent) {
+        parentNodes.splice(indent + 1)
+        currentNode = parentNodes[indent]
       }
     }
     currentNode.children.push(node)
@@ -49,6 +76,7 @@ const makeSchemes = (text) => {
   return { pageSchemes, nodeSchemes }
 }
 
+// レンダリング
 const render = (pageSchemes, nodeSchemes, $container) => {
   if (pageSchemes.pageTitle !== '') {
     const $pageTitle = document.createElement('div')
@@ -60,6 +88,7 @@ const render = (pageSchemes, nodeSchemes, $container) => {
   renderNode(pageSchemes, nodeSchemes, $container)
 }
 
+// 各ノードのレンダリング
 const renderNode = (pageSchemes, nodeSchemes, $parent) => {
   for (const scheme of nodeSchemes.children) {
     const $container = document.createElement('div')
