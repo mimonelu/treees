@@ -5,6 +5,8 @@ import router from '@/router'
 import store from '@/store'
 
 import '@/assets/main.scss'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/base16-dark.css'
 
 Vue.config.productionTip = false
 
