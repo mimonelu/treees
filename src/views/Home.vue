@@ -21,6 +21,7 @@
         <Treees
           ref="treees"
           :source="source"
+          @update="onUpdateTreees"
         />
       </div>
     </div>
@@ -30,6 +31,7 @@
 <script>
 // SEE: https://www.npmjs.com/package/html-to-image
 import * as htmlToImage from 'html-to-image'
+import defaultSource from '@/config/default-source.txt'
 import TextArea from '@/components/text-area'
 import Treees from '@/components/treees'
 
@@ -44,51 +46,28 @@ export default {
   data () {
     return {
       mode: 'edit',
-      source: `#pageTitle=My Sitemap
-#imagePath=img/
-
-Top
-  About
-  Pricing
-    Free
-    Paid
-  Contact: footer=Search bar<br>Top questions
-    Email: class=fill
-  Terms
-    ...
-  Privacy
-    ...
-  Login
-    Authorized: class=borderless,red
-      Contents: class=red
-    Password reset
-      Email: class=fill
-  Error
-
-Contents: class=red
-  Categories: class=red
-    All: class=red
-      ...: class=red
-    Novel: class=red; image=novel.jpg
-      ...: class=red
-    Music: class=red; image=music.jpg
-      ...: class=red
-    Movie: class=disabled,red; footer=Coming soon
-    Game: class=red; image=game.jpg
-      ...: class=red
-  Search: class=red
-  Cart: class=red
-    Shipping form: class=red
-      Payment form: class=red
-        Confirmation: class=red
-          Email: class=fill
-`,
+      source: '',
     }
+  },
+
+  created () {
+    let data = localStorage.getItem('treees')
+    if (data) {
+      data = JSON.parse(data)
+      data.mode = data.mode || 'edit'
+      data.source = data.source || defaultSource
+    } else {
+      data.mode = 'edit'
+      data.source = defaultSource
+    }
+    this.mode = data.mode
+    this.source = data.source
   },
 
   methods: {
     onClickToggleModeButton () {
       this.mode = this.mode === 'edit' ? 'view' : 'edit'
+      this.save()
     },
 
     onClickCaptureButton () {
@@ -98,6 +77,18 @@ Contents: class=red
           this.download('test.png', dataUrl)
         })
         // .catch(console.error)
+    },
+
+    onUpdateTreees () {
+      this.save()
+    },
+
+    save () {
+      const data = JSON.stringify({
+        mode: this.mode,
+        source: this.source,
+      })
+      localStorage.setItem('treees', data)
     },
 
     download (fileName, href) {

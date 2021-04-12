@@ -31,6 +31,7 @@ export default {
     update () {
       const $container = this.$el.querySelector('.all')
       treees(this.source, $container)
+      this.$emit('update')
     },
   },
 }

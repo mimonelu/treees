@@ -1,9 +1,8 @@
 # treees
 
 ## Tasks
-* CodeMirror の導入＋ textarea-caret の削除
+* 画像のアップロード（？）
 * スタイライズまわりの実装
-* LocalStorage への保存・読込
 
 ## Project setup
 ```

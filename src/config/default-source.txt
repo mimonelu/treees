@@ -1,0 +1,38 @@
+#pageTitle=My Sitemap
+#imagePath=img/
+
+Top
+  About
+  Pricing
+    Free
+    Paid
+  Contact: footer=Search bar<br>Top questions
+    Email: class=fill
+  Terms
+    ...
+  Privacy
+    ...
+  Login
+    Authorized: class=borderless,red
+      Contents: class=red
+    Password reset
+      Email: class=fill
+  Error
+
+Contents: class=red
+  Categories: class=red
+    All: class=red
+      ...: class=red
+    Novel: class=red; image=novel.jpg
+      ...: class=red
+    Music: class=red; image=music.jpg
+      ...: class=red
+    Movie: class=disabled,red; footer=Coming soon
+    Game: class=red; image=game.jpg
+      ...: class=red
+  Search: class=red
+  Cart: class=red
+    Shipping form: class=red
+      Payment form: class=red
+        Confirmation: class=red
+          Email: class=fill
