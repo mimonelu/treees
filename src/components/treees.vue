@@ -15,6 +15,10 @@ export default {
       type: String,
       default: '',
     },
+    files: {
+      type: Array,
+      default: () => ([]),
+    },
   },
 
   mounted () {
@@ -30,7 +34,7 @@ export default {
   methods: {
     update () {
       const $container = this.$el.querySelector('.all')
-      treees(this.source, $container)
+      treees(this.source, this.files, $container)
       this.$emit('update')
     },
   },

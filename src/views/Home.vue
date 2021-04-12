@@ -6,6 +6,14 @@
     <div class="header">
       <h1>Treees</h1>
       <menu>
+        <button @click="onClickEmbedImagesButton">
+          Embed images
+          <input
+            type="file"
+            multiple
+            @change="onChangeFile"
+          >
+        </button>
         <button @click="onClickToggleModeButton"><span>{{ mode }}</span> mode</button>
         <button @click="onClickCaptureButton">Capture</button>
       </menu>
@@ -21,6 +29,7 @@
         <Treees
           ref="treees"
           :source="source"
+          :files="files"
           @update="onUpdateTreees"
         />
       </div>
@@ -47,6 +56,7 @@ export default {
     return {
       mode: 'edit',
       source: '',
+      files: [],
     }
   },
 
@@ -65,6 +75,21 @@ export default {
   },
 
   methods: {
+    onClickEmbedImagesButton () {
+      //
+    },
+
+    onChangeFile (event) {
+      const targetNode = event.target
+      if (targetNode && targetNode.files) {
+        this.files.splice(0)
+        for (let i = 0; i < targetNode.files.length; i ++) {
+          this.files.push(targetNode.files[i])
+        }
+      }
+      this.$refs.treees.update()
+    },
+
     onClickToggleModeButton () {
       this.mode = this.mode === 'edit' ? 'view' : 'edit'
       this.save()

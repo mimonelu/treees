@@ -1,7 +1,7 @@
-export default (schemeText, $container) => {
+export default (schemeText, files, $container) => {
   const { pageSchemes, nodeSchemes } = makeSchemes(schemeText)
   $container.innerHTML = ''
-  render(pageSchemes, nodeSchemes, $container)
+  render(pageSchemes, nodeSchemes, files, $container)
 }
 
 // スキームの作成
@@ -77,7 +77,7 @@ const makeSchemes = (text) => {
 }
 
 // レンダリング
-const render = (pageSchemes, nodeSchemes, $container) => {
+const render = (pageSchemes, nodeSchemes, files, $container) => {
   if (pageSchemes.pageTitle !== '') {
     const $pageTitle = document.createElement('div')
     $pageTitle.classList.add('page-title')
@@ -85,11 +85,11 @@ const render = (pageSchemes, nodeSchemes, $container) => {
     $container.appendChild($pageTitle)
   }
 
-  renderNode(pageSchemes, nodeSchemes, $container)
+  renderNode(pageSchemes, nodeSchemes, files, $container)
 }
 
 // 各ノードのレンダリング
-const renderNode = (pageSchemes, nodeSchemes, $parent) => {
+const renderNode = (pageSchemes, nodeSchemes, files, $parent) => {
   for (const scheme of nodeSchemes.children) {
     const $container = document.createElement('div')
     $container.classList.add('container')
@@ -115,12 +115,27 @@ const renderNode = (pageSchemes, nodeSchemes, $parent) => {
 
     if (scheme.image) {
       const $image = document.createElement('img')
-      const image = pageSchemes.imagePath + scheme.image
       $image.classList.add('image')
-      $image.src = image
-      $image.onclick = () => {
-        window.open(image)
+
+      const file = files.find((file) => {
+        // NOTICE: Mac では 「ガ」というような文字が「カ＋゛」として表現される現象への対応
+        // SEE: https://qiita.com/jkr_2255/items/e0c039c438d3ebfd1a6a
+        const name = file.name.normalize('NFKC')
+        return name === scheme.image
+      })
+      if (file) {
+        $image.src = URL.createObjectURL(file)
+        $image.onclick = () => {
+          window.open($image.src)
+        }
+      } else {
+        const image = pageSchemes.imagePath + scheme.image
+        $image.src = image
+        $image.onclick = () => {
+          window.open(image)
+        }
       }
+
       $box.appendChild($image)
     }
 
@@ -136,7 +151,7 @@ const renderNode = (pageSchemes, nodeSchemes, $parent) => {
       $childContainer.classList.add('child-container')
       $container.appendChild($childContainer)
 
-      renderNode(pageSchemes, scheme, $childContainer)
+      renderNode(pageSchemes, scheme, files, $childContainer)
     }
   }
 }
