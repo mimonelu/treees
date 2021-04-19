@@ -6,16 +6,18 @@
     <div class="header">
       <h1>Treees</h1>
       <menu>
-        <button @click="onClickEmbedImagesButton">
-          Embed images
-          <input
-            type="file"
-            multiple
-            @change="onChangeFile"
-          >
-        </button>
-        <button @click="onClickToggleModeButton"><span>{{ mode }}</span> mode</button>
-        <button @click="onClickCaptureButton">Capture</button>
+        <FileButton
+          label="Embed images"
+          @change="onChangeFile"
+        />
+        <button
+          class="button"
+          @click="onClickToggleModeButton"
+        ><span>{{ mode }}</span> mode</button>
+        <button
+          class="button"
+          @click="onClickCaptureButton"
+        >Capture</button>
       </menu>
     </div>
     <div class="content">
@@ -41,13 +43,15 @@
 // SEE: https://www.npmjs.com/package/html-to-image
 import * as htmlToImage from 'html-to-image'
 import defaultSource from '@/config/default-source.txt'
-import TextArea from '@/components/text-area'
-import Treees from '@/components/treees'
+import FileButton from '@/components/FileButton'
+import TextArea from '@/components/TextArea'
+import Treees from '@/components/Treees'
 
 export default {
   name: 'Home',
 
   components: {
+    FileButton,
     TextArea,
     Treees,
   },
@@ -75,10 +79,6 @@ export default {
   },
 
   methods: {
-    onClickEmbedImagesButton () {
-      //
-    },
-
     onChangeFile (event) {
       const targetNode = event.target
       if (targetNode && targetNode.files) {
@@ -150,7 +150,8 @@ export default {
     menu {
       margin-left: auto;
 
-      button {
+      .button,
+      .FileButton {
         &:not(:last-child) {
           margin-right: 1rem;
         }

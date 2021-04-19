@@ -69,7 +69,7 @@ export default {
 
     .CodeMirror-line,
     .CodeMirror-linenumber {
-      line-height: 1.25;
+      line-height: 1.375;
     }
 
     .CodeMirror-activeline-background {

@@ -25,18 +25,3 @@ body {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-
-button {
-  appearance: none;
-  background-color: #ffffff;
-  border-style: none;
-  color: #000000;
-  cursor: pointer;
-  font-size: medium;
-  font-weight: bold;
-  padding: 0.25rem 1rem;
-  user-select: none;
-  &:hover {
-    color: $accent-color;
-  }
-}

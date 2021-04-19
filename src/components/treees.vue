@@ -119,7 +119,7 @@ export default {
     position: relative;
   }
   .has-image > .box {
-    max-width: calc(var(--image-width) + 0.25rem * 2 + var(--border-width) * 2);
+    // max-width: calc(var(--image-width) + 0.25rem * 2 + var(--border-width) * 2);
   }
   .box::before,
   .box::after {
