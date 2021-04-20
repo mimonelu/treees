@@ -1,7 +1,6 @@
 # treees
 
 ## Tasks
-* ローカル画像のアップロードボタンの調整
 * スタイライズまわりの実装
 
 ## Project setup

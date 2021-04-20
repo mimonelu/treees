@@ -29,6 +29,12 @@ const makeSchemes = (text) => {
     // ディレクティブ
     const directive = (text.match(/^#(.*)/) || [ '', '' ])[1]
     if (directive !== '') {
+      // テーマ
+      const theme = (directive.match(/theme=([^;]*)/) || [ '', '' ])[1]
+      if (theme !== '') {
+        pageSchemes.theme = theme
+      }
+
       // ページタイトル
       const pageTitle = (directive.match(/pageTitle=([^;]*)/) || [ '', '' ])[1]
       if (pageTitle !== '') {
@@ -78,6 +84,10 @@ const makeSchemes = (text) => {
 
 // レンダリング
 const render = (pageSchemes, nodeSchemes, files, $container) => {
+  if (pageSchemes.theme !== '') {
+    $container.setAttribute('class', `treees treees--${pageSchemes.theme}`)
+  }
+
   if (pageSchemes.pageTitle !== '') {
     const $pageTitle = document.createElement('div')
     $pageTitle.classList.add('page-title')
