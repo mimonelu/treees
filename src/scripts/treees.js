@@ -2,6 +2,7 @@ export default (schemeText, files, $container) => {
   const { pageSchemes, nodeSchemes } = makeSchemes(schemeText)
   $container.innerHTML = ''
   render(pageSchemes, nodeSchemes, files, $container)
+  return { pageSchemes, nodeSchemes }
 }
 
 // スキームの作成

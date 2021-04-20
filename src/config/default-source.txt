@@ -1,3 +1,4 @@
+#theme=none
 #pageTitle=My Sitemap
 #imagePath=img/
 

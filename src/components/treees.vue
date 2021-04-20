@@ -34,8 +34,8 @@ export default {
   methods: {
     update () {
       const $container = this.$el.querySelector('.treees')
-      treees(this.source, this.files, $container)
-      this.$emit('update')
+      const schemes = treees(this.source, this.files, $container)
+      this.$emit('update', schemes)
     },
   },
 }

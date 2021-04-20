@@ -60,6 +60,7 @@ export default {
     return {
       mode: 'edit',
       source: '',
+      fileName: 'treees',
       files: [],
     }
   },
@@ -71,8 +72,10 @@ export default {
       data.mode = data.mode || 'edit'
       data.source = data.source || defaultSource
     } else {
-      data.mode = 'edit'
-      data.source = defaultSource
+      data = {
+        mode: 'edit',
+        source: defaultSource,
+      }
     }
     this.mode = data.mode
     this.source = data.source
@@ -96,15 +99,16 @@ export default {
     },
 
     onClickCaptureButton () {
-      const $node = this.$refs.treees.$el.querySelector('.all')
+      const $node = this.$refs.treees.$el.querySelector('.treees')
       htmlToImage.toPng($node)
         .then((dataUrl) => {
-          this.download('test.png', dataUrl)
+          this.download(`${this.fileName}.png`, dataUrl)
         })
-        // .catch(console.error)
+        .catch(console.error)
     },
 
-    onUpdateTreees () {
+    onUpdateTreees (schemes) {
+      this.fileName = schemes.pageSchemes.pageTitle || 'treees'
       this.save()
     },
 
